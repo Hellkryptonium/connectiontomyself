@@ -1,0 +1,68 @@
+body {
+  margin: 0;
+  background: #f4f1e8;
+  color: #222;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.6;
+}
+
+a {
+  color: #174a7e;
+}
+
+a:hover {
+  color: #8b2f2f;
+}
+
+.site {
+  max-width: 760px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+.site-header {
+  border-bottom: 1px solid #999;
+  padding-bottom: 20px;
+}
+
+.site-header h1 {
+  margin-bottom: 0;
+  font-size: 32px;
+}
+
+.tagline {
+  margin-top: 0;
+  color: #666;
+  font-style: italic;
+}
+
+nav {
+  margin-top: 20px;
+}
+
+nav a {
+  margin-right: 18px;
+}
+
+main {
+  padding: 30px 0;
+}
+
+section {
+  margin-bottom: 40px;
+}
+
+h2 {
+  font-size: 21px;
+}
+
+footer {
+  border-top: 1px solid #999;
+  padding: 20px 0 40px;
+  color: #666;
+  font-size: 14px;
+}
+
+ul {
+  padding-left: 25px;
+}
