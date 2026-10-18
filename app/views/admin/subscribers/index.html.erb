@@ -1,0 +1,11 @@
+<% content_for :title, "Subscribers · connectiontomyself" %>
+<div class="site admin-site">
+  <header class="site-header"><p class="site-mark"><%= link_to "connectiontomyself", root_path %></p><div class="admin-heading"><div><p class="eyebrow">newsletter audience</p><h1>subscribers</h1></div></div><%= render "admin/nav" %></header>
+  <main>
+    <% if flash[:notice] %><p class="flash flash-notice"><%= flash[:notice] %></p><% end %>
+    <% if flash[:alert] %><p class="flash flash-error"><%= flash[:alert] %></p><% end %>
+    <div class="admin-post-list">
+      <% @subscribers.each do |subscriber| %><article class="admin-post-row"><div class="post-row-copy"><span class="status status-<%= subscriber.status %>"><%= subscriber.status %></span><h3><%= subscriber.email %></h3><small>Joined <%= subscriber.created_at.to_date.to_fs(:long) %></small></div><div class="post-row-actions"><% unless subscriber.active? %><%= button_to "resend confirmation", resend_confirmation_admin_subscriber_path(subscriber), method: :post, class: "button-secondary" %><% end %></div></article><% end %>
+    </div>
+  </main>
+</div>

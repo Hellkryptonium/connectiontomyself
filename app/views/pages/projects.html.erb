@@ -1,0 +1,12 @@
+<% content_for :title, "Projects · connectiontomyself" %>
+<div class="site">
+  <header class="site-header"><p class="site-mark"><%= link_to "connectiontomyself", root_path %></p><h1>projects</h1><p class="tagline">things made, maintained, or explored</p></header>
+  <main>
+    <% if @projects.any? %>
+      <ul class="post-list">
+        <% @projects.each do |project| %><li><%= link_to project.title, project_path(project.slug) %><small><%= project.status %></small><p><%= project.description %></p></li><% end %>
+      </ul>
+    <% else %><p>No projects listed yet.</p><% end %>
+  </main>
+  <footer><p><%= link_to "← back home", root_path %></p></footer>
+</div>

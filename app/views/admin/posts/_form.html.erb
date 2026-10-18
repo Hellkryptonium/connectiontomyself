@@ -1,0 +1,23 @@
+<header class="site-header">
+  <p class="site-mark"><%= link_to "connectiontomyself", root_path %></p>
+  <div class="admin-heading"><div><p class="eyebrow">publishing desk</p><h1><%= heading %></h1></div><%= link_to "back to dashboard", admin_root_path, class: "button-link button-secondary" %></div>
+  <%= render "admin/nav" %>
+</header>
+
+<main>
+  <% if post.errors.any? %>
+    <div class="flash flash-error"><strong>There is one thing to fix:</strong> <%= post.errors.full_messages.to_sentence %></div>
+  <% end %>
+  <%= form_with model: [:admin, post] do |form| %>
+    <div class="editor-grid">
+      <div class="editor-main">
+        <div class="field"><%= form.label :title, "Title" %><%= form.text_field :title, required: true, maxlength: 180, placeholder: "A title worth returning to" %></div>
+        <div class="field"><%= form.label :body_markdown, "Writing" %><p class="field-help">Write in Markdown. Start headings with <code>#</code>, use blank lines between paragraphs, and add links with <code>[text](https://example.com)</code>.</p><%= form.text_area :body_markdown, rows: 24, required: true, placeholder: "# A beginning\n\nWrite here..." %></div>
+      </div>
+      <aside class="editor-sidebar">
+        <div class="sidebar-box"><h2>Details</h2><div class="field"><%= form.label :slug, "URL slug" %><%= form.text_field :slug, required: true, pattern: "[a-z0-9]+(?:-[a-z0-9]+)*", placeholder: "my-first-post" %><p class="field-help">Lowercase words separated by hyphens.</p></div><div class="field"><%= form.label :excerpt %><%= form.text_area :excerpt, rows: 4, placeholder: "A short description for lists and RSS." %></div><div class="field"><%= form.label :meta_description %><%= form.text_field :meta_description, placeholder: "Optional search description" %></div></div>
+        <div class="sidebar-box"><h2>Save</h2><p class="field-help">Saving keeps this as a draft. Publish it from the dashboard when it is ready.</p><%= form.submit "save draft", class: "button-primary button-wide" %></div>
+      </aside>
+    </div>
+  <% end %>
+</main>

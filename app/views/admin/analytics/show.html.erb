@@ -1,0 +1,24 @@
+<% content_for :title, "Analytics · connectiontomyself" %>
+<div class="site admin-site">
+  <header class="site-header">
+    <p class="site-mark"><%= link_to "connectiontomyself", root_path %></p>
+    <div class="admin-heading"><div><p class="eyebrow">last 30 days</p><h1>analytics</h1></div></div>
+    <%= render "admin/nav" %>
+  </header>
+  <main>
+    <div class="analytics-summary">
+      <div class="analytics-stat"><strong><%= @recent_views %></strong><span>page views</span></div>
+      <div class="analytics-stat"><strong><%= @unique_visitors %></strong><span>unique visitors</span></div>
+      <div class="analytics-stat"><strong><%= @total_views %></strong><span>all-time views</span></div>
+    </div>
+
+    <div class="analytics-grid">
+      <section class="analytics-section"><h2>Popular pages</h2><% if @top_pages.any? %><ol class="analytics-list"><% @top_pages.each do |path, count| %><li><span><%= path %></span><strong><%= count %></strong></li><% end %></ol><% else %><p>No visits recorded yet.</p><% end %></section>
+      <section class="analytics-section"><h2>Popular writings</h2><% if @top_articles.any? %><ol class="analytics-list"><% @top_articles.each do |post_id, count| %><li><span><%= @article_names[post_id]&.title || "Deleted post" %></span><strong><%= count %></strong></li><% end %></ol><% else %><p>No article views recorded yet.</p><% end %></section>
+      <section class="analytics-section"><h2>Referrers</h2><% if @referrers.any? %><ol class="analytics-list"><% @referrers.each do |host, count| %><li><span><%= host %></span><strong><%= count %></strong></li><% end %></ol><% else %><p>No referrers recorded yet.</p><% end %></section>
+      <section class="analytics-section"><h2>Countries</h2><% if @countries.any? %><ol class="analytics-list"><% @countries.each do |country, count| %><li><span><%= country %></span><strong><%= count %></strong></li><% end %></ol><% else %><p>Country data appears when deployed behind a trusted Cloudflare proxy.</p><% end %></section>
+    </div>
+
+    <p class="analytics-note">Analytics use no tracking cookies. IP addresses are converted to daily rotating hashes and are never stored directly.</p>
+  </main>
+</div>

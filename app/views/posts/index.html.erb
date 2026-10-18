@@ -1,0 +1,34 @@
+<% content_for :title, "Writings · connectiontomyself" %>
+
+<div class="site">
+  <header class="site-header">
+    <p class="site-mark"><%= link_to "connectiontomyself", root_path %></p>
+    <h1>writings</h1>
+    <p class="tagline">notes, essays, and things worth keeping</p>
+    <nav aria-label="Primary navigation">
+      <%= link_to "home", root_path %>
+      <%= link_to "writings", writings_path, aria: { current: "page" } %>
+      <%= link_to "projects", projects_path %>
+      <%= link_to "now", now_path %>
+      <%= link_to "about", about_path %>
+    </nav>
+  </header>
+
+  <main>
+    <% if @posts.any? %>
+      <ol class="post-list writing-index-list">
+        <% @posts.each do |post| %>
+          <li>
+            <div class="post-list-meta"><time datetime="<%= post.published_at.iso8601 %>"><%= post.published_at.to_date.to_fs(:long) %></time><span><%= post.reading_time %> min read</span></div>
+            <%= link_to post.title, writing_path(post.slug), class: "post-list-title" %>
+            <% if post.excerpt.present? %><p><%= post.excerpt %></p><% end %>
+          </li>
+        <% end %>
+      </ol>
+    <% else %>
+      <p>There are no published writings yet.</p>
+    <% end %>
+  </main>
+
+  <footer><p><%= link_to "← back home", root_path %> · <%= link_to "RSS", rss_path %></p></footer>
+</div>

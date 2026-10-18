@@ -1,0 +1,32 @@
+<% content_for :title, "#{@page_title} · connectiontomyself" %>
+
+<div class="site">
+  <header class="site-header">
+    <p class="site-mark"><%= link_to "connectiontomyself", root_path %></p>
+    <h1><%= @page_title %></h1>
+    <p class="tagline"><%= @page_subtitle %></p>
+
+    <nav aria-label="Primary navigation">
+      <%= link_to "home", root_path %>
+      <%= link_to "writings", writings_path %>
+      <%= link_to "archive", archive_path %>
+      <%= link_to "projects", projects_path %>
+      <%= link_to "now", now_path %>
+      <%= link_to "about", about_path %>
+      <%= link_to "links", links_path %>
+    </nav>
+  </header>
+
+  <main>
+    <% @paragraphs.each do |paragraph| %>
+      <p><%= paragraph %></p>
+    <% end %>
+
+    <p class="back-link"><%= link_to "← back home", root_path %></p>
+  </main>
+
+  <footer>
+    <p>made by hand · connectiontomyself</p>
+    <p><%= link_to "RSS", "/rss.xml" %> · <%= link_to "guestbook", guestbook_path %> · <%= link_to "subscribe", subscribe_path %></p>
+  </footer>
+</div>

@@ -1,0 +1,25 @@
+<% content_for :title, "Newsletters · connectiontomyself" %>
+<div class="site admin-site">
+  <header class="site-header">
+    <p class="site-mark"><%= link_to "connectiontomyself", root_path %></p>
+    <div class="admin-heading"><div><p class="eyebrow">direct to subscribers</p><h1>newsletters</h1></div><%= link_to "new newsletter", new_admin_newsletter_path, class: "button-link button-primary" %></div>
+    <%= render "admin/nav" %>
+  </header>
+  <main>
+    <% if flash[:notice] %><p class="flash flash-notice"><%= flash[:notice] %></p><% end %>
+    <% if flash[:alert] %><p class="flash flash-error"><%= flash[:alert] %></p><% end %>
+    <p class="section-intro">Newsletters are separate from your public writings. Draft one here, then send it once to confirmed subscribers.</p>
+    <% if @newsletters.any? %>
+      <div class="admin-post-list">
+        <% @newsletters.each do |newsletter| %>
+          <article class="admin-post-row">
+            <div class="post-row-copy"><span class="status status-<%= newsletter.status %>"><%= newsletter.status %></span><h3><%= newsletter.subject %></h3><small><%= newsletter.sent? ? "Sent #{newsletter.sent_at.to_date.to_fs(:long)}" : "Updated #{newsletter.updated_at.to_date.to_fs(:long)}" %></small></div>
+            <div class="post-row-actions"><%= link_to "edit", edit_admin_newsletter_path(newsletter), class: "button-link button-secondary" unless newsletter.sent? %><% unless newsletter.sent? %><%= button_to "send", send_newsletter_admin_newsletter_path(newsletter), method: :post, class: "button-primary", data: { turbo_confirm: "Send this newsletter to all active subscribers?" } %><% end %><%= button_to "delete", admin_newsletter_path(newsletter), method: :delete, class: "button-danger", data: { turbo_confirm: "Delete this newsletter?" } %></div>
+          </article>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="empty-state"><h2>No newsletters yet.</h2><p>Your writings and newsletters are separate. Create a newsletter whenever you have something you want to send directly to subscribers.</p><%= link_to "create a newsletter", new_admin_newsletter_path, class: "button-link button-primary" %></div>
+    <% end %>
+  </main>
+</div>

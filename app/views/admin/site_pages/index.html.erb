@@ -1,0 +1,2 @@
+<% content_for :title, "Pages admin · connectiontomyself" %>
+<div class="site admin-site"><header class="site-header"><h1>site pages</h1></header><main><ul><% @pages.each do |page| %><li><%= page.title %> · <%= link_to "edit", edit_admin_site_page_path(page) %></li><% end %></ul><p><%= link_to "admin", admin_root_path %></p></main></div>

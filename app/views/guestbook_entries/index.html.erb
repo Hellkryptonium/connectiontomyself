@@ -1,0 +1,27 @@
+<% content_for :title, "Guestbook · connectiontomyself" %>
+<div class="site">
+  <header class="site-header"><p class="site-mark"><%= link_to "connectiontomyself", root_path %></p><h1>guestbook</h1><p class="tagline">a place to leave a note</p></header>
+  <main>
+    <% if flash[:notice] %><p class="flash flash-notice"><%= flash[:notice] %></p><% end %>
+    <section class="guestbook-form-section" aria-labelledby="guestbook-form-title">
+      <h2 id="guestbook-form-title">Leave a note</h2>
+      <p class="section-intro">Say hello, share a link, or leave a thought. Notes are reviewed before they appear.</p>
+      <% if @entry.errors.any? %><p class="flash flash-error"><%= @entry.errors.full_messages.to_sentence %></p><% end %>
+      <%= form_with model: @entry, url: guestbook_path do |form| %>
+        <div class="field"><%= form.label :name %><%= form.text_field :name, required: true, maxlength: 80, autocomplete: "name" %></div>
+        <div class="field"><%= form.label :website_url, "Website (optional)" %><%= form.url_field :website_url, autocomplete: "url", placeholder: "https://" %></div>
+        <p class="honeypot" aria-hidden="true"><label>Leave this blank<%= text_field_tag :website, tabindex: "-1", autocomplete: "off" %></label></p>
+        <div class="field"><%= form.label :message %><%= form.text_area :message, required: true, maxlength: 2_000, rows: 6, aria: { describedby: "message-help" } %><p class="field-help" id="message-help">Up to 2,000 characters.</p></div>
+        <%= form.submit "sign guestbook", class: "button-primary" %>
+      <% end %>
+    </section>
+
+    <section aria-labelledby="guestbook-notes-title">
+      <h2 id="guestbook-notes-title">Notes from visitors</h2>
+      <% if @entries.any? %>
+        <% @entries.each do |entry| %><article class="guestbook-entry"><h3><%= entry.name %></h3><p><%= entry.message %></p><small><%= entry.created_at.to_date.to_fs(:long) %></small></article><% end %>
+      <% else %><p>No notes yet. Yours could be the first.</p><% end %>
+    </section>
+  </main>
+  <footer><p><%= link_to "← back home", root_path %></p></footer>
+</div>

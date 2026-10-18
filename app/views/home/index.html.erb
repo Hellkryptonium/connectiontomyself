@@ -1,58 +1,72 @@
 <div class="site">
   <header class="site-header">
     <h1>connectiontomyself</h1>
+    <span class="site-stamp" aria-hidden="true">hand-built / no feed</span>
 
     <p class="tagline">
       a small corner of the internet
     </p>
 
-    <nav>
+    <nav aria-label="Primary navigation">
       <%= link_to "home", root_path %>
-      <%= link_to "writings", "#" %>
-      <%= link_to "projects", "#" %>
-      <%= link_to "now", "#" %>
-      <%= link_to "about", "#" %>
-      <%= link_to "links", "#" %>
+      <%= link_to "writings", writings_path %>
+      <%= link_to "archive", archive_path %>
+      <%= link_to "projects", projects_path %>
+      <%= link_to "now", now_path %>
+      <%= link_to "about", about_path %>
+      <%= link_to "links", links_path %>
     </nav>
   </header>
 
   <main>
     <section class="intro">
-      <h2>Hello, internet.</h2>
-
-      <p>
-        Welcome to my little corner of the web.
-      </p>
-
-      <p>
-        I'm Harish. I write about things I'm building,
-        things I'm learning, computers, the internet,
-        ideas that won't leave me alone, and occasionally
-        whatever else seems worth writing down.
-      </p>
-
-      <p>
-        This isn't a social network. There is no algorithm
-        deciding what you should read.
-      </p>
+      <% if @home_page %>
+        <h2><%= @home_page.title %></h2>
+        <p class="tagline"><%= @home_page.subtitle %></p>
+        <%= MarkdownRenderer.call(@home_page.body_markdown) %>
+      <% else %>
+        <h2>Hello, internet.</h2>
+        <p>Welcome to my little corner of the web.</p>
+        <p>[Editable placeholder] Add your introduction in Admin -> Pages -> Home.</p>
+      <% end %>
     </section>
 
-    <section>
-      <h2>recent writings</h2>
+    <div class="home-columns">
+      <section class="home-section">
+        <h2>recent writings</h2>
 
-      <p>
-        There aren't any yet.
-        <a href="#">Check back soon.</a>
-      </p>
-    </section>
+        <% if @recent_posts.any? %>
+          <ul class="post-list">
+            <% @recent_posts.each do |post| %>
+              <li><%= link_to post.title, writing_path(post.slug) %> <small><%= post.published_at.to_date.to_fs(:long) %></small></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>There aren't any yet. Check back soon.</p>
+        <% end %>
+      </section>
+
+      <section class="home-section">
+        <h2>selected projects</h2>
+        <% if @projects.any? %>
+          <ul>
+            <% @projects.each do |project| %><li><%= link_to project.title, project_path(project.slug) %> — <%= project.description %></li><% end %>
+          </ul>
+        <% else %>
+          <p>No projects listed yet.</p>
+        <% end %>
+      </section>
+    </div>
 
     <section>
       <h2>currently</h2>
 
       <ul>
-        <li>building connectiontomyself</li>
-        <li>learning Ruby on Rails</li>
-        <li>exploring the old web</li>
+        <% if @now_page %>
+          <li><%= strip_tags(MarkdownRenderer.call(@now_page.body_markdown)) %></li>
+        <% else %>
+          <li>[Editable placeholder] what I am building, learning, or exploring</li>
+        <% end %>
       </ul>
     </section>
   </main>
@@ -63,9 +77,13 @@
     </p>
 
     <p>
-      <a href="#">RSS</a>
+      <a href="/rss.xml">RSS</a>
       ·
-      <a href="#">guestbook</a>
+      <%= link_to "guestbook", guestbook_path %>
+      ·
+      <%= link_to "subscribe", subscribe_path %>
+      ·
+      <%= link_to "privacy", privacy_path %>
     </p>
   </footer>
 </div>

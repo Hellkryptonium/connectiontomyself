@@ -1,0 +1,10 @@
+<% content_for :title, "#{@project.title} · connectiontomyself" %>
+<div class="site">
+  <header class="site-header"><p class="site-mark"><%= link_to "connectiontomyself", root_path %></p><h1><%= @project.title %></h1><p class="post-meta"><%= @project.status %></p></header>
+  <main class="article">
+    <p class="lede"><%= @project.description %></p>
+    <% if @project.body_markdown.present? %><%= MarkdownRenderer.call(@project.body_markdown) %><% end %>
+    <% if @project.external_url.present? %><p><%= link_to "project link", @project.external_url, rel: "noopener" %></p><% end %>
+  </main>
+  <footer><p><%= link_to "← all projects", projects_path %></p></footer>
+</div>

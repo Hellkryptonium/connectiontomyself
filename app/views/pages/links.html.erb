@@ -1,0 +1,13 @@
+<% content_for :title, "Links · connectiontomyself" %>
+<div class="site">
+  <header class="site-header"><p class="site-mark"><%= link_to "connectiontomyself", root_path %></p><h1>links</h1><p class="tagline">useful corners of the web</p></header>
+  <main>
+    <% if @links.any? %>
+      <% @links.group_by(&:category).each do |category, links| %>
+        <h2><%= category.presence || "other" %></h2>
+        <ul><% links.each do |link| %><li><%= link_to link.title, link.url, rel: "noopener" %><% if link.description.present? %> — <%= link.description %><% end %></li><% end %></ul>
+      <% end %>
+    <% else %><p>No links listed yet.</p><% end %>
+  </main>
+  <footer><p><%= link_to "← back home", root_path %></p></footer>
+</div>

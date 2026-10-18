@@ -1,0 +1,14 @@
+<% content_for :title, "Subscribe · connectiontomyself" %>
+<div class="site">
+  <header class="site-header"><p class="site-mark"><%= link_to "connectiontomyself", root_path %></p><h1>subscribe</h1><p class="tagline">occasional notes, sent with care</p></header>
+  <main>
+    <% if flash[:notice] %><p><%= flash[:notice] %></p><% end %>
+    <% if flash[:alert] %><p class="form-error"><%= flash[:alert] %></p><% end %>
+    <p>Subscribe for new writings. You will need to confirm your address, and every message will include an unsubscribe link.</p>
+    <%= form_with url: subscribe_path, method: :post do |form| %>
+      <p><%= form.label :email %><br><%= form.email_field :email, required: true, autocomplete: "email" %></p>
+      <p><%= form.submit "request subscription" %></p>
+    <% end %>
+  </main>
+  <footer><p><%= link_to "← back home", root_path %></p></footer>
+</div>

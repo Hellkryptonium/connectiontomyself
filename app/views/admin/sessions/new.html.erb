@@ -1,0 +1,19 @@
+<% content_for :title, "Admin sign in · connectiontomyself" %>
+
+<div class="site admin-site">
+  <header class="site-header">
+    <p class="site-mark"><%= link_to "connectiontomyself", root_path %></p>
+    <p class="eyebrow">private publishing area</p>
+    <h1>sign in</h1>
+    <p class="tagline">Write, edit, and publish from one quiet place.</p>
+  </header>
+
+  <main>
+    <% if flash[:alert] %><p class="form-error"><%= flash[:alert] %></p><% end %>
+    <%= form_with url: admin_login_path, method: :post do |form| %>
+      <div class="field"><%= form.label :email %><%= form.email_field :email, required: true, autocomplete: "email", autofocus: true %></div>
+      <div class="field"><%= form.label :password %><%= form.password_field :password, required: true, autocomplete: "current-password" %></div>
+      <%= form.submit "sign in", class: "button-primary" %>
+    <% end %>
+  </main>
+</div>

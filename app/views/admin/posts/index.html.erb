@@ -1,0 +1,29 @@
+<% content_for :title, "Admin · connectiontomyself" %>
+
+<div class="site admin-site">
+  <header class="site-header">
+    <p class="site-mark"><%= link_to "connectiontomyself", root_path %></p>
+    <div class="admin-heading">
+      <div><p class="eyebrow">your publishing desk</p><h1>dashboard</h1></div>
+      <p class="account-line"><%= current_admin.email %> · <%= link_to "sign out", admin_logout_path, data: { turbo_method: :delete } %></p>
+    </div>
+    <%= render "admin/nav" %>
+  </header>
+
+  <main>
+    <% if flash[:notice] %><p class="flash flash-notice"><%= flash[:notice] %></p><% end %>
+    <div class="section-heading"><div><p class="eyebrow">your writing</p><h2>posts</h2></div><%= link_to "write something new", new_admin_post_path, class: "button-link" %></div>
+    <% if @posts.any? %>
+      <div class="admin-post-list">
+        <% @posts.each do |post| %>
+          <article class="admin-post-row">
+            <div class="post-row-copy"><span class="status status-<%= post.status %>"><%= post.status %></span><h3><%= post.title %></h3><p><%= post.excerpt.presence || "No excerpt yet." %></p><small>Updated <%= post.updated_at.to_date.to_fs(:long) %></small></div>
+            <div class="post-row-actions"><%= link_to "edit", edit_admin_post_path(post), class: "button-link button-secondary" %><% if post.status == "published" %><%= button_to "unpublish", unpublish_admin_post_path(post), method: :patch, class: "button-secondary" %><% else %><%= button_to "publish", publish_admin_post_path(post), method: :patch, class: "button-primary" %><% end %><%= button_to "delete", admin_post_path(post), method: :delete, class: "button-danger", data: { turbo_confirm: "Delete this post?" } %></div>
+          </article>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="empty-state"><h3>Your first post starts here.</h3><p>Write a draft in Markdown, save it, and publish it when it is ready.</p><%= link_to "write your first post", new_admin_post_path, class: "button-link button-primary" %></div>
+    <% end %>
+  </main>
+</div>

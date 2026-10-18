@@ -1,0 +1,23 @@
+<% content_for :title, "#{@post.title} · connectiontomyself" %>
+<% content_for :description, (@post.meta_description.presence || @post.excerpt.presence || "A writing from connectiontomyself.") %>
+<div class="site article-site">
+  <header class="site-header">
+    <p class="site-mark"><%= link_to "connectiontomyself", root_path %></p>
+    <p class="breadcrumb"><%= link_to "writings", writings_path %> / <%= @post.published_at.year %></p>
+    <h1><%= @post.title %></h1>
+    <p class="post-meta"><time datetime="<%= @post.published_at.iso8601 %>"><%= @post.published_at.to_date.to_fs(:long) %></time> · <%= @post.reading_time %> min read<% if @post.updated_at > @post.published_at + 1.day %> · updated <%= @post.updated_at.to_date.to_fs(:long) %><% end %></p>
+  </header>
+
+  <main class="article">
+    <% if @post.excerpt.present? %><p class="lede"><%= @post.excerpt %></p><% end %>
+    <%= MarkdownRenderer.call(@post.body_markdown) %>
+  </main>
+
+  <nav class="article-nav" aria-label="More writings">
+    <div><% if @older_post %><span class="article-nav-label">older</span><%= link_to @older_post.title, writing_path(@older_post.slug) %><% end %></div>
+    <div class="article-nav-index"><%= link_to "all writings", writings_path %></div>
+    <div class="article-nav-next"><% if @newer_post %><span class="article-nav-label">newer</span><%= link_to @newer_post.title, writing_path(@newer_post.slug) %><% end %></div>
+  </nav>
+
+  <footer><p><%= link_to "← back home", root_path %> · <%= link_to "RSS", rss_path %></p></footer>
+</div>

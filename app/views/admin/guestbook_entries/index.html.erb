@@ -1,0 +1,13 @@
+<% content_for :title, "Guestbook moderation · connectiontomyself" %>
+<div class="site admin-site">
+  <header class="site-header"><p class="site-mark"><%= link_to "connectiontomyself", root_path %></p><h1>guestbook moderation</h1></header>
+  <main>
+    <% if flash[:notice] %><p><%= flash[:notice] %></p><% end %>
+    <% @entries.each do |entry| %>
+      <article class="guestbook-entry"><h2><%= entry.name %> <small><%= entry.approved? ? "approved" : "pending" %></small></h2><p><%= entry.message %></p><% if entry.website_url.present? %><p><%= entry.website_url %></p><% end %>
+        <% unless entry.approved? %><%= button_to "approve", approve_admin_guestbook_entry_path(entry), method: :patch %><% end %>
+        <%= button_to "remove", admin_guestbook_entry_path(entry), method: :delete, data: { turbo_confirm: "Remove this entry?" } %>
+      </article>
+    <% end %>
+  </main>
+</div>
