@@ -10,7 +10,7 @@ gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
-gem "commonmarker", "~> 0.23"
+gem "commonmarker", "~> 2.10"
 gem "bcrypt", "~> 3.1"
 gem "resend"
 
